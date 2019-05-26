@@ -1,35 +1,33 @@
 const apiPath = 'https://sec.meetkaruna.com/api/v1';
 
 // Action Types
-const GET = 'conversations/GET';
-const GET_LIST = 'conversations/GET_LIST';
+const GET = 'conversation/GET';
 
 // Reducer
 export default function reducer(state = {}, action = {}) {
-  const {type, ...data} = action;
+  const {type, conversation} = action;
   switch (type) {
     case GET:
-    case GET_LIST:
-      return Object.assign({}, state, data);
+      return Object.assign({}, state, conversation);
     default: return state;
   }
 }
 
 // Action Creators
-export function getOne(conversation) {
+export function get(conversation) {
   return { type: GET, conversation };
-}
-export function getList(conversations) {
-  return { type: GET_LIST, conversations };
 }
 
 // API connections
-
-export function getConversations () {
-  return dispatch => fetch(`${apiPath}/conversations`)
-    .then(resp => dispatch(getList(resp)))
-}
-export function getConversation (uuid) {
+export function getConversation(uuid) {
   return dispatch => fetch(`${apiPath}/conversations/${uuid}`)
-    .then(resp => dispatch(getOne(resp)))
+    .then(resp => {
+      return resp.json();
+    })
+    .then(data => {
+      dispatch(get(data))
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }

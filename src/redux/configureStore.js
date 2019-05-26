@@ -1,13 +1,15 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import createLogger from 'redux-logger';
+import logger from 'redux-logger'
+import thunk from 'redux-thunk';
+
 import conversation from './modules/conversation'
+import conversations from './modules/conversations'
 
-const loggerMiddleware = createLogger(); // initialize logger
-
-const createStoreWithMiddleware = applyMiddleware(loggerMiddleware)(createStore); // apply logger to redux
+const createStoreWithMiddleware = applyMiddleware(logger, thunk)(createStore); // apply logger to redux
 
 const reducer = combineReducers({
   conversation,
+  conversations,
 });
 
 const configureStore = (initialState) => createStoreWithMiddleware(reducer, initialState);
