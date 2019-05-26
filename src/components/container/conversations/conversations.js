@@ -7,9 +7,11 @@ import {getConversations} from "../../../redux/modules/conversations";
 import Pagination from "../../core/pagination/pagination";
 import List from "../../core/list/list";
 
+const KEYS_TO_FILTERS = ['name']
+
 class Conversations extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: [],
       total: 0,
@@ -44,7 +46,12 @@ class Conversations extends React.Component {
       <div className='conversation-list'>
         <h2>All Conversations</h2>
         <p>{total}</p>
-        <List data={data} type='conversations'/>
+        <List
+          data={data}
+          type='conversations'
+          withSearch
+          searchKeys={KEYS_TO_FILTERS}
+        />
         <Pagination page={page} total={total} onPageChange={this.onPageChange} />
       </div>
     );

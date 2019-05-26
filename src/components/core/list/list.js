@@ -1,23 +1,40 @@
 import * as React from 'react';
+import SearchInput, {createFilter} from 'react-search-input'
+import equal from 'deep-equal'
+
 import ListItem from "../list_item/list_item";
 import ConversationsItem from "../list_item_templates/conversations_item";
 
-class List extends React.Component {
 
-  renderItemTemplate(item) {
+class List extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      searchTerm: ''
+    };
+  }
+
+  searchUpdated = (searchTerm) => {
+    this.setState({searchTerm})
+  };
+
+  renderItemTemplate = (item) => {
     const { type } = this.props;
     if (type === 'conversations') {
       return <ConversationsItem itemData={item}/>
     }
-  }
+  };
 
   render() {
-    const { data } = this.props;
+    const { data, withSearch, searchKeys } = this.props;
+    const listData = data && searchKeys && withSearch ? data.filter(createFilter(this.state.searchTerm, searchKeys)) : data;
+
     return (
       <div className='list'>
+        {withSearch && <SearchInput className="search-input" onChange={this.searchUpdated} />}
         <ul>
-          {data && data.map((item, idx) => {
-            return <li key={idx}>
+          {listData && listData.map((item) => {
+            return <li key={item.uuid}>
               <ListItem>
                 {this.renderItemTemplate(item)}
               </ListItem>
