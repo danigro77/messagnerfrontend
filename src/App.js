@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Link} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import createStore from './redux/configureStore';
 
@@ -14,18 +14,20 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
+
+      <BrowserRouter>
         <header className="App-header">
-          <h1>Messenger</h1>
+          <Link to='/'><h1>Messenger</h1></Link>
         </header>
 
-        <BrowserRouter>
-          <Route path="/conversations/:uuid/:name" component={Conversation} />
-          <Route exact path="/" component={Conversations} />
-        </BrowserRouter>
+        <Route exact path="/" component={Conversations} />
+        <Route path="/conversations/:uuid/:name" component={Conversation} />
 
         <footer>
           <p>Daniela Kohls, 2019-05-26</p>
         </footer>
+      </BrowserRouter>
+
       </div>
     </Provider>
   );

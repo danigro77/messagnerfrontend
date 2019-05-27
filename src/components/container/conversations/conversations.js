@@ -44,8 +44,7 @@ class Conversations extends React.Component {
     const { total, data, page } = this.state;
     return (
       <div className='conversation-list'>
-        <h2>All Conversations</h2>
-        <p>{total}</p>
+        <h2>{total} Conversations</h2>
         <List
           data={data}
           type='conversations'
