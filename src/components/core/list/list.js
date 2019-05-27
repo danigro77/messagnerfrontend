@@ -30,7 +30,7 @@ class List extends React.Component {
   };
 
   render() {
-    const { data, withSearch, searchKeys, linkItem } = this.props;
+    const { data, withSearch, searchKeys } = this.props;
     const listData = data && searchKeys && withSearch ? data.filter(createFilter(this.state.searchTerm, searchKeys)) : data;
 
     return (

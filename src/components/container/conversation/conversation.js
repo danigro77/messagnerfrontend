@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 
 import equal from 'deep-equal';
 
-import {getConversation} from "../../../redux/modules/conversation";
+import {getConversation, addMessage} from "../../../redux/modules/conversation";
 import List from "../../core/list/list";
+import TextField from "../../core/text_field/text_field";
+import Button from "../../core/buttons/button";
 
 
 class Conversation extends React.Component {
@@ -15,6 +17,8 @@ class Conversation extends React.Component {
       conversation: {},
       name: '',
       messages: [],
+      newMessage: '',
+      uuid: '',
     }
   }
 
@@ -28,23 +32,36 @@ class Conversation extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { conversation, match } = this.props;
-    const { data } = conversation;
+    const { data, uuid } = conversation;
     if (!equal(conversation, prevProps.conversation)) {
       this.setState({
         conversation,
+        uuid,
         name: match.params.name,
-        messages: data && data.messages && data.messages.sort((a, b) =>  new Date(b.created_at) - new Date(a.created_at))
+        messages: data && data.messages && data.messages.sort((a, b) =>  new Date(a.created_at) - new Date(b.created_at))
       });
     }
   }
 
+  handleChange = (event) => {
+    const newMessage = event.target.value;
+    this.setState({newMessage});
+  };
+
+  sendMessage = () => {
+    const { uuid, newMessage } = this.state;
+    this.props.addMessage(uuid, newMessage);
+    this.setState({newMessage: ''});
+  };
+
   render() {
-    const { conversation, name, messages } = this.state;
-    const { uuid } = conversation;
+    const { name, messages, newMessage } = this.state;
     return (
       <div className='conversation'>
         <h2>Your conversation with {name}</h2>
         <List data={messages} type='messages'/>
+        <TextField value={newMessage} onChange={this.handleChange}/>
+        <Button onClick={this.sendMessage} text='Send Message'/>
       </div>
     );
   }
@@ -56,4 +73,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getConversation,
+  addMessage,
 })(withRouter(Conversation));
