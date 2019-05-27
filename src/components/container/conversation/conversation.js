@@ -49,8 +49,8 @@ class Conversation extends React.Component {
   };
 
   sendMessage = () => {
-    const { uuid, newMessage } = this.state;
-    this.props.addMessage(uuid, newMessage);
+    const { newMessage } = this.state;
+    this.props.addMessage(newMessage);
     this.setState({newMessage: ''});
   };
 

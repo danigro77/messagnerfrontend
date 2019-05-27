@@ -11,7 +11,7 @@ export default function reducer(state = {}, action = {}) {
     case GET:
       return Object.assign({}, state, conversation);
     case CREATE:
-      const newState = Object.assign({}, state);
+      const newState = Object.assign({}, state)
       newState.data.messages.push({
         body: action.message,
         uuid: Math.random().toString(36).substring(7),
