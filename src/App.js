@@ -1,13 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { Container, Row } from 'react-bootstrap';
 import createStore from './redux/configureStore';
 
-import {Container, Row} from "react-bootstrap";
 import './App.css';
 
-import Conversations from './components/container/conversations/conversations'
-import Conversation from './components/container/conversation/conversation'
+import Conversations from './components/container/conversations/conversations';
+import Conversation from './components/container/conversation/conversation';
 
 const store = createStore();
 
@@ -16,9 +16,9 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
-          <Container className='container'>
+          <Container className="container">
             <Row className="header">
-              <Link to='/'><h1>Messenger</h1></Link>
+              <Link to="/"><h1>Messenger</h1></Link>
             </Row>
 
             <Row className="content">

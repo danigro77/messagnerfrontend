@@ -1,4 +1,4 @@
-export function callAPI(path, method = 'GET', params={}) {
+export function callAPI(path, method = 'GET', params = {}) {
   const headers = new Headers({
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -12,7 +12,5 @@ export function callAPI(path, method = 'GET', params={}) {
     url += `&per_page=${params.per_page}`;
   }
   return fetch(url, { headers, method })
-    .then(resp => {
-      return resp.json();
-    });
+    .then(resp => resp.json());
 }

@@ -1,4 +1,4 @@
-import { callAPI } from "../fetch";
+import { callAPI } from '../fetch';
 
 // Action Types
 const GET = 'conversation/GET';
@@ -6,12 +6,12 @@ const CREATE = 'conversation/CREATE';
 
 // Reducer
 export default function reducer(state = {}, action = {}) {
-  const {type, conversation} = action;
+  const { type, conversation } = action;
   switch (type) {
     case GET:
       return Object.assign({}, state, conversation);
     case CREATE:
-      const newState = Object.assign({}, state)
+      const newState = Object.assign({}, state);
       newState.data.messages.unshift({
         body: action.message,
         uuid: Math.random().toString(36).substring(7),
@@ -32,17 +32,17 @@ function create(message) {
 }
 
 // API connections
-export function getConversation(uuid, page=0) {
+export function getConversation(uuid, page = 0) {
   const path = `/conversations/${uuid}`;
-  return dispatch => callAPI(path, 'GET', {page})
-    .then(data => {
-      dispatch(get(data))
+  return dispatch => callAPI(path, 'GET', { page })
+    .then((data) => {
+      dispatch(get(data));
     })
-    .catch(err => {
-      console.log(err)
-    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export function addMessage(message) {
-  return dispatch => dispatch(create(message))
+  return dispatch => dispatch(create(message));
 }
