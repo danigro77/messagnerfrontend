@@ -24,12 +24,19 @@ class Conversations extends React.Component {
   componentWillMount() {
     if (!this.props.conversations.total) {
       this.props.getConversations();
+    } else if (this.state.data.length === 0) {
+      const { total, data, page, per_page } = this.props.conversations;
+      this.setState({
+        total,
+        page,
+        per_page,
+        data: data && data.sort((a, b) =>  new Date(b.last_message.created_at) - new Date(a.last_message.created_at))
+      })
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { total, data, page, per_page } = this.props.conversations;
-    console.log(this.props.conversations)
     if (this.props.conversations && (prevState.total !== total || !equal(data, prevState.data))) {
       this.setState({
         total,
