@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import equal from 'deep-equal';
+import {Container, Row} from "react-bootstrap";
 
 import {getConversations} from "../../../redux/modules/conversations";
 import Pagination from "../../core/pagination/pagination";
@@ -43,16 +44,18 @@ class Conversations extends React.Component {
   render() {
     const { total, data, page } = this.state;
     return (
-      <div className='conversation-list'>
-        <h2>{total} Conversations</h2>
-        <List
-          data={data}
-          type='conversations'
-          withSearch
-          searchKeys={KEYS_TO_FILTERS}
-        />
-        <Pagination page={page} total={total} onPageChange={this.onPageChange} />
-      </div>
+      <Container className='conversations'>
+        <Row><h2>{total} Conversations</h2></Row>
+        <Row>
+          <List
+            data={data}
+            type='conversations'
+            withSearch
+            searchKeys={KEYS_TO_FILTERS}
+          />
+        </Row>
+        <Row><Pagination page={page} total={total} onPageChange={this.onPageChange} /></Row>
+      </Container>
     );
   }
 }

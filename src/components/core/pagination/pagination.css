@@ -1,0 +1,10 @@
+.pagination ul {
+  list-style-type: none;
+  padding: 0 30%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.pagination li {
+  cursor: pointer;
+}

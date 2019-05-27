@@ -3,10 +3,22 @@
   border: 1px black solid;
   border-radius: 10px;
   padding: 10px;
+  margin: 10px 0;
 }
-.message-item-incoming {
-  background: antiquewhite;
+.message-item .sender {
+  font-weight: 600;
 }
 .message-item-outgoing {
   margin-left: auto;
+  background: plum;
+}
+
+
+.conversations-item {
+  border-bottom: 1px black solid;
+  padding: 10px;
+}
+
+.conversations-item:first-of-type {
+  border-top: 1px black solid;
 }

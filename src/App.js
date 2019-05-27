@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import createStore from './redux/configureStore';
 
+import {Container, Row} from "react-bootstrap";
 import './App.css';
 
 import Conversations from './components/container/conversations/conversations'
@@ -14,20 +15,22 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
+        <BrowserRouter>
+          <Container className='container'>
+            <Row className="header">
+              <Link to='/'><h1>Messenger</h1></Link>
+            </Row>
 
-      <BrowserRouter>
-        <header className="App-header">
-          <Link to='/'><h1>Messenger</h1></Link>
-        </header>
+            <Row className="content">
+              <Route exact path="/" component={Conversations} />
+              <Route path="/conversations/:uuid/:name" component={Conversation} />
+            </Row>
 
-        <Route exact path="/" component={Conversations} />
-        <Route path="/conversations/:uuid/:name" component={Conversation} />
-
-        <footer>
-          <p>Daniela Kohls, 2019-05-26</p>
-        </footer>
-      </BrowserRouter>
-
+            <Row className="footer">
+              <p>Daniela Kohls, 2019-05-26</p>
+            </Row>
+          </Container>
+        </BrowserRouter>
       </div>
     </Provider>
   );

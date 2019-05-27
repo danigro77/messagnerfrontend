@@ -1,7 +1,19 @@
 body {
-
+  font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+  background: gainsboro;
+  padding: 10px 30px;
+  color: #111;
 }
 
-code {
-
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+}
+h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+}
+p, div, a, span, li {
+  font-size: 14px;
 }

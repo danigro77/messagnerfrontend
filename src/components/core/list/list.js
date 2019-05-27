@@ -2,8 +2,8 @@ import * as React from 'react';
 import SearchInput, {createFilter} from 'react-search-input'
 
 import './list.css'
+import {Container, Row} from "react-bootstrap";
 
-import ListItem from "../list_item/list_item";
 import ConversationsItem from "../list_item_templates/conversations_item";
 import MessagesItem from "../list_item_templates/messages_item";
 
@@ -23,9 +23,10 @@ class List extends React.Component {
   renderItemTemplate = (item) => {
     const { type } = this.props;
     if (type === 'conversations') {
-      return <ConversationsItem itemData={item}/>
+      return <ConversationsItem itemData={item} key={item.uuid}/>
     } else if (type === 'messages') {
-      return <MessagesItem itemData={item}/>
+      const { name } = this.props;
+      return <MessagesItem itemData={item} sender={name} key={item.uuid}/>
     }
   };
 
@@ -34,18 +35,15 @@ class List extends React.Component {
     const listData = data && searchKeys && withSearch ? data.filter(createFilter(this.state.searchTerm, searchKeys)) : data;
 
     return (
-      <div className='list'>
-        {withSearch && <SearchInput className="search-input" onChange={this.searchUpdated} />}
-        <ul>
-          {listData && listData.map((item) => {
-            return <li key={item.uuid}>
-              <ListItem>
-                {this.renderItemTemplate(item)}
-              </ListItem>
-            </li>
-          })}
-        </ul>
-      </div>
+      <Container className='list'>
+        {withSearch && <Row>
+          <SearchInput className="search-input"
+                       onChange={this.searchUpdated} />
+        </Row>}
+        {listData && listData.map((item) => {
+          return this.renderItemTemplate(item)
+        })}
+      </Container>
     )
   }
 }

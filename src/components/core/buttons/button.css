@@ -1,0 +1,7 @@
+.button {
+  padding: 5px 10px;
+  border: plum 1px solid;
+  background: plum;
+  display: block;
+  margin: 10px auto;
+}

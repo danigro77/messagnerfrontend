@@ -1,1 +1,15 @@
-
+.container {
+  background: ghostwhite;
+  padding: 10px;
+}
+.header {
+  border-bottom: #111111 solid 1px;
+  margin-bottom: 5px;
+}
+.footer {
+  border-top: #111111 solid 1px;
+  margin-top: 5px;
+}
+.footer p, .header h1 {
+  text-align: right;
+}

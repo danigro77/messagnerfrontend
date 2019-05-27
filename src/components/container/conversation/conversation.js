@@ -59,7 +59,7 @@ class Conversation extends React.Component {
     return (
       <div className='conversation'>
         <h2>Your conversation with {name}</h2>
-        <List data={messages} type='messages'/>
+        <List data={messages} name={name} type='messages'/>
         <TextField value={newMessage} onChange={this.handleChange}/>
         <Button onClick={this.sendMessage} text='Send Message'/>
       </div>
