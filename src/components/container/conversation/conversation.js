@@ -8,17 +8,21 @@ import {getConversation, addMessage} from "../../../redux/modules/conversation";
 import List from "../../core/list/list";
 import TextField from "../../core/text_field/text_field";
 import Button from "../../core/buttons/button";
+import Pagination from "../conversations/conversations";
+import {Row} from "react-bootstrap";
 
 
 class Conversation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      conversation: {},
       name: '',
       messages: [],
       newMessage: '',
       uuid: '',
+      page: 0,
+      total: 0,
+      per_page: 0,
     }
   }
 
@@ -32,13 +36,16 @@ class Conversation extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { conversation, match } = this.props;
-    const { data, uuid } = conversation;
+    const { data, page, total, per_page } = conversation;
+    const { uuid, name } = match.params;
     if (!equal(conversation, prevProps.conversation)) {
       this.setState({
-        conversation,
+        page,
+        total,
+        per_page,
         uuid,
-        name: match.params.name,
-        messages: data && data.messages && data.messages.sort((a, b) =>  new Date(a.created_at) - new Date(b.created_at))
+        name,
+        messages: data && data.messages && data.messages.sort((a, b) =>  new Date(b.created_at) - new Date(a.created_at))
       });
     }
   }
@@ -54,14 +61,22 @@ class Conversation extends React.Component {
     this.setState({newMessage: ''});
   };
 
+  onPageChange = (page) => {
+    this.props.getConversation(this.state.uuid, page.selected);
+    this.setState({page: page.selected})
+  };
+
   render() {
-    const { name, messages, newMessage } = this.state;
+    const { name, messages, newMessage, page, total, per_page } = this.state;
     return (
       <div className='conversation'>
         <h2>Your conversation with {name}</h2>
+        {page === 0 && <span>
+          <TextField value={newMessage} onChange={this.handleChange}/>
+          <Button onClick={this.sendMessage} text='Send Message'/>
+        </span>}
         <List data={messages} name={name} type='messages'/>
-        <TextField value={newMessage} onChange={this.handleChange}/>
-        <Button onClick={this.sendMessage} text='Send Message'/>
+        {total > per_page && <Row><Pagination page={page} total={total} onPageChange={this.onPageChange} /></Row>}
       </div>
     );
   }

@@ -12,7 +12,7 @@ export default function reducer(state = {}, action = {}) {
       return Object.assign({}, state, conversation);
     case CREATE:
       const newState = Object.assign({}, state)
-      newState.data.messages.push({
+      newState.data.messages.unshift({
         body: action.message,
         uuid: Math.random().toString(36).substring(7),
         created_at: new Date(),
@@ -32,9 +32,9 @@ function create(message) {
 }
 
 // API connections
-export function getConversation(uuid) {
+export function getConversation(uuid, page=0) {
   const path = `/conversations/${uuid}`;
-  return dispatch => callAPI(path)
+  return dispatch => callAPI(path, 'GET', {page})
     .then(data => {
       dispatch(get(data))
     })

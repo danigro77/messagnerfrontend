@@ -17,6 +17,7 @@ class Conversations extends React.Component {
       data: [],
       total: 0,
       page: 0,
+      per_page: 0,
     };
   }
 
@@ -27,10 +28,13 @@ class Conversations extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { total, data } = this.props.conversations;
+    const { total, data, page, per_page } = this.props.conversations;
+    console.log(this.props.conversations)
     if (this.props.conversations && (prevState.total !== total || !equal(data, prevState.data))) {
       this.setState({
         total,
+        page,
+        per_page,
         data: data && data.sort((a, b) =>  new Date(b.last_message.created_at) - new Date(a.last_message.created_at))
       })
     }
@@ -42,7 +46,7 @@ class Conversations extends React.Component {
   };
 
   render() {
-    const { total, data, page } = this.state;
+    const { total, data, page, per_page } = this.state;
     return (
       <Container className='conversations'>
         <Row><h2>{total} Conversations</h2></Row>
@@ -54,7 +58,7 @@ class Conversations extends React.Component {
             searchKeys={KEYS_TO_FILTERS}
           />
         </Row>
-        <Row><Pagination page={page} total={total} onPageChange={this.onPageChange} /></Row>
+        {total > per_page && <Row><Pagination page={page} total={total} onPageChange={this.onPageChange} /></Row>}
       </Container>
     );
   }
