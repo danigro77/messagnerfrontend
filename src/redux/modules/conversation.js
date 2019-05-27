@@ -1,4 +1,4 @@
-const apiPath = 'https://sec.meetkaruna.com/api/v1';
+import { callAPI } from "../fetch";
 
 // Action Types
 const GET = 'conversation/GET';
@@ -20,10 +20,8 @@ export function get(conversation) {
 
 // API connections
 export function getConversation(uuid) {
-  return dispatch => fetch(`${apiPath}/conversations/${uuid}`)
-    .then(resp => {
-      return resp.json();
-    })
+  const path = `/conversations/${uuid}`;
+  return dispatch => callAPI(path)
     .then(data => {
       dispatch(get(data))
     })

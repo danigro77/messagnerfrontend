@@ -19,7 +19,7 @@ function App() {
         </header>
 
         <BrowserRouter>
-          <Route path="/conv/:uuid" component={Conversation} />
+          <Route path="/conversations/:uuid/:name" component={Conversation} />
           <Route exact path="/" component={Conversations} />
         </BrowserRouter>
 

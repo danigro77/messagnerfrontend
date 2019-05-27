@@ -1,9 +1,11 @@
 import * as React from 'react';
 import SearchInput, {createFilter} from 'react-search-input'
-import equal from 'deep-equal'
+
+import './list.css'
 
 import ListItem from "../list_item/list_item";
 import ConversationsItem from "../list_item_templates/conversations_item";
+import MessagesItem from "../list_item_templates/messages_item";
 
 
 class List extends React.Component {
@@ -22,11 +24,13 @@ class List extends React.Component {
     const { type } = this.props;
     if (type === 'conversations') {
       return <ConversationsItem itemData={item}/>
+    } else if (type === 'messages') {
+      return <MessagesItem itemData={item}/>
     }
   };
 
   render() {
-    const { data, withSearch, searchKeys } = this.props;
+    const { data, withSearch, searchKeys, linkItem } = this.props;
     const listData = data && searchKeys && withSearch ? data.filter(createFilter(this.state.searchTerm, searchKeys)) : data;
 
     return (
